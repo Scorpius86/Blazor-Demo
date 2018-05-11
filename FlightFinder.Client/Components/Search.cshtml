@@ -1,0 +1,66 @@
+﻿<div class="col">
+    <!-- Airport selection -->
+    <div class="row py-1">
+        <!-- From airport -->
+        <div class="col pr-0">
+            <div class="form-control d-flex">
+                <div><i>✈</i>&nbsp;&nbsp;Desde:</div>
+                <input list="airports" placeholder="..." bind=criteria.FromAirport />
+            </div>
+        </div>
+        <div class="col px-2 py-1 align-self-end arrow">➝</div>
+
+        <!-- To airport -->
+        <div class="col pl-0">
+            <div class="form-control d-flex">
+                <div><i>✈</i>&nbsp;&nbsp;A:</div>
+                <input list="airports" placeholder="..." bind=criteria.ToAirport />
+            </div>
+        </div>
+    </div>
+
+    <!-- Departure / arrival dates -->
+    <div class="row py-1">
+        <!-- Depart date -->
+        <div class="col pr-0">
+            <div class="form-control d-flex">
+                <div><i>🗓</i>&nbsp;&nbsp;Salida:</div>
+                <input type="date" bind=criteria.OutboundDate format-value="yyyy-MM-dd" />
+            </div>
+        </div>
+        <div class="col px-2 py-1 align-self-end arrow">➝</div>
+
+        <!-- Arrive date -->
+        <div class="col pl-0">
+            <div class="form-control d-flex">
+                <div><i>🗓</i>&nbsp;&nbsp;Llegada:</div>
+                <input type="date" bind=criteria.ReturnDate format-value="yyyy-MM-dd" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Class / search -->
+    <div class="row py-1 d-flex px-3">
+        <div>
+            <select class="custom-select" bind=criteria.TicketClass>
+                <option value=@TicketClass.Economy>Economico</option>
+                <option value=@TicketClass.PremiumEconomy>Economico Premium</option>
+                <option value=@TicketClass.Business>Ejecutivo</option>
+                <option value=@TicketClass.First>Primera Clase</option>
+            </select>
+        </div>
+        <div class="ml-auto">
+            <button onclick=@(() => OnSearch(criteria)) type="button" class="btn btn-danger px-5">
+                Buscar ➝
+            </button>
+        </div>
+    </div>
+</div>
+<AirportsList />
+
+@functions
+{
+    [Parameter] Func<SearchCriteria, Task> OnSearch { get; set; }
+
+    private SearchCriteria criteria = new SearchCriteria("LHR", "SEA");
+}
